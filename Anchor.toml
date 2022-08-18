@@ -1,7 +1,7 @@
 [features]
 seeds = false
 [programs.localnet]
-charity_sol = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+charity_sol = "8S9X2NND2gWutYFYPc8QUCv4zEbr9TDVsHufMR49YhYF"
 
 [registry]
 url = "https://anchor.projectserum.com"
