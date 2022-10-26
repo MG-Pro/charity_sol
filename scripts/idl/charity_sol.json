@@ -3,17 +3,17 @@
   "name": "charity_sol",
   "instructions": [
     {
-      "name": "initialize",
+      "name": "createApp",
       "accounts": [
         {
-          "name": "donation",
+          "name": "platformOwner",
           "isMut": true,
           "isSigner": true
         },
         {
-          "name": "owner",
+          "name": "settings",
           "isMut": true,
-          "isSigner": true
+          "isSigner": false
         },
         {
           "name": "systemProgram",
@@ -44,14 +44,96 @@
         }
       ],
       "returns": null
+    },
+    {
+      "name": "initCampaign",
+      "accounts": [
+        {
+          "name": "campaignOwner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "campaign",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [],
+      "returns": null
+    },
+    {
+      "name": "donate",
+      "accounts": [
+        {
+          "name": "campaign",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "donator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "settings",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ],
+      "returns": null
     }
   ],
   "accounts": [
     {
-      "name": "Donation",
+      "name": "Campaign",
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "campaignOwner",
+            "type": "publicKey"
+          },
+          {
+            "name": "fund",
+            "type": "u64"
+          },
+          {
+            "name": "topDonatorsCampaign",
+            "type": {
+              "vec": {
+                "defined": "Donator"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Settings",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "platformOwner",
+            "type": "publicKey"
+          },
           {
             "name": "duration",
             "type": "u16"
@@ -70,6 +152,40 @@
           },
           {
             "name": "closingLimit",
+            "type": "u64"
+          },
+          {
+            "name": "maxTopDonatorsPlatform",
+            "type": "u16"
+          },
+          {
+            "name": "maxTopDonatorsCampaign",
+            "type": "u16"
+          },
+          {
+            "name": "topDonatorsPlatform",
+            "type": {
+              "vec": {
+                "defined": "Donator"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "Donator",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "address",
+            "type": "publicKey"
+          },
+          {
+            "name": "amount",
             "type": "u64"
           }
         ]
